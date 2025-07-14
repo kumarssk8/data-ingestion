@@ -22,6 +22,15 @@ public class GlobalExceptionHandler {
                         invalidHeaderException.header));
     }
 
+    @ExceptionHandler(InvalidRequestException.class)
+    public ResponseEntity<ApiErrorResponse> headerError(InvalidRequestException invalidRequestException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiErrorResponse(invalidRequestException.getMessage(),
+                        HttpStatus.BAD_REQUEST.value(),
+                        "invalid_request",
+                        invalidRequestException.getAttribute()));
+    }
+
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ApiErrorResponse> handleMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)

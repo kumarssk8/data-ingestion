@@ -8,7 +8,7 @@ Two Approach:
 
 ## In-memory Buffer:
 
-This approaches uses an one in-memory data store in each instance. If the in-memory buffer hits the memory threshold or age of first records exceeds the time threshold, content will be uploaded to S3. All the API reqs in a server will add data to one in-memory buffer and the upload to s3 is performed in non-blocking manner. All the memory threshold and age threshold limits can be configured via properties. 
+This approach uses an in-memory buffer store in each app instance. All the API reqs in a server will add data to the in-memory buffer, if threshold limit is reached upload to S3 is triggered. The S3 upload will be triggered only when the in-memory buffer reaches the memory threshold or time duration of the records exceeds the time limit threshold. The upload to s3 is performed in non-blocking manner. All the memory threshold and age threshold limits can be configured via properties. 
 
 <img width="1370" height="394" alt="Screenshot 2025-07-14 at 3 15 31 PM" src="https://github.com/user-attachments/assets/ec780643-0a29-4c0a-98ec-a613956229f2" />
 

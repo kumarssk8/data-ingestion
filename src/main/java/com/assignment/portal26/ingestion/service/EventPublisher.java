@@ -28,11 +28,6 @@ public class EventPublisher {
         publisher.publish(customerId, tier, event);
     }
 
-    public void sendEvent(Event e) throws Exception {
-        String data = objectMapper.writeValueAsString(e.getIngestData());
-        inMemoryBuffer.send(data);
-        log.info("Data sent to in-memory buffer.");
-    }
 
 
 

@@ -41,7 +41,7 @@ public class S3Service {
     public void upload(String prefix, String data) {
             LocalDateTime localDateTime = LocalDateTime.now();
             String key = prefix + dateFormatter.format(localDateTime)
-                   + "/" + ipAddress + ":" + timeFormatter.format(localDateTime);
+                   + "/" + ipAddress + "_" + timeFormatter.format(localDateTime);
             log.info("File uploading with key {}", key);
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(bucketName)

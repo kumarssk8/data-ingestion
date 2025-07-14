@@ -28,13 +28,10 @@ public class InMemoryBuffer {
 
     public InMemoryBuffer(S3Service s3Service,
                           @Value("${app.buffer.max_size.mb}") int maxSizeInMb,
-                          @Value("${app.buffer.max_time.secs}") int maxSecWait,
-                          @Value("${app.buffer.time_flush.interval.secs}") long timeflushInSecs){
+                          @Value("${app.buffer.max_time.secs}") int maxSecWait){
         this.s3Service = s3Service;
         this.maxSize = maxSizeInMb * 1024 * 1024;
         this.maxSecs = maxSecWait;
-        ScheduledExecutorService scheduler = newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(this::timeFlush, 0, timeflushInSecs, TimeUnit.SECONDS);
     }
 
     @Async("virtualThreadExecutor")
@@ -52,7 +49,7 @@ public class InMemoryBuffer {
         }
     }
 
-    private void timeFlush(){
+    public void timeFlush(){
         synchronized (lock){
             long currentTime = System.currentTimeMillis();
             long seconds = ((currentTime - lastCheckedTime) / 1000) ;

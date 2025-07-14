@@ -6,12 +6,15 @@ Two Approach:
 
 **Note: I have not implemented the 2nd approach. I have shared design on my thought process. Also, due to time constraint I did not add test case. I will add when I find time**
 
-## In-memory Buffer:
+## In-Memory Buffer:
 
 This approach uses an in-memory buffer store in each app instance. All the API reqs in a server will add data to the in-memory buffer, if threshold limit is reached upload to S3 is triggered. The S3 upload will be triggered only when the in-memory buffer reaches the memory threshold or time duration of the records exceeds the time limit threshold. The upload to s3 is performed in non-blocking manner. All the memory threshold and age threshold limits can be configured via properties. 
 
 <img width="1370" height="394" alt="Screenshot 2025-07-14 at 3 15 31 PM" src="https://github.com/user-attachments/assets/ec780643-0a29-4c0a-98ec-a613956229f2" />
 
+
+### Tech Stack:
+Spring Boot
 
 ### Aws Infra Setup:
 I have setup this whole infra in us-east-1 region. VPC names is "saravanakumar-vpc". I have created two public and private subnet. Added route table to the subnet and added IG to public subnet. I have deployed the app as container in one ec2 instance. ALB is not created as it is demo app. App can be access directly with ec2 public dns name.
@@ -29,10 +32,12 @@ Consumer Parameters to tune are:
 2) Max no of records to fetch by enabling batching.
 3) Time to wait between each consumer poll from the broker.
 
-Here, we have additional cost factor of kafka resource.
-
 <img width="1042" height="312" alt="Screenshot 2025-07-14 at 5 32 54 PM" src="https://github.com/user-attachments/assets/9550813d-4436-4060-8b5a-174aacc51ddd" />
 
+
+## Pros & Cons:
+* In the second approach, there is additonal cost for running and maintaining kafka and additional network hops before data reaches S3.
+* In the first approach, the data will be lost, if the server goes when the data is present in-memory before uploading to S3. This can be minimized by reducing the time flush from 5secs to little lesser value and again S3 writes will be increased. 
 
 
 

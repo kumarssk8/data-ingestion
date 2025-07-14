@@ -1,10 +1,8 @@
 package com.assignment.portal26.ingestion.controller;
 
-import com.assignment.portal26.ingestion.dto.Event;
 import com.assignment.portal26.ingestion.dto.IngestData;
 import com.assignment.portal26.ingestion.dto.IngestResponse;
 import com.assignment.portal26.ingestion.exception.InvalidHeaderException;
-import com.assignment.portal26.ingestion.service.EventPublisher;
 import com.assignment.portal26.ingestion.service.InMemoryAccumulatorService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -24,15 +21,12 @@ import java.util.Optional;
 @Slf4j
 public class IngestionController {
 
-
-    EventPublisher eventPublisher;
     String[] tiers;
     InMemoryAccumulatorService inMemoryAccumulatorService;
 
-    public IngestionController(EventPublisher eventPublisher,
+    public IngestionController(
                                @Qualifier("tiers") String[] tiers,
                                InMemoryAccumulatorService inMemoryAccumulatorService){
-        this.eventPublisher = eventPublisher;
         this.tiers = tiers;
         this.inMemoryAccumulatorService = inMemoryAccumulatorService;
     }
@@ -53,8 +47,6 @@ public class IngestionController {
             throw new InvalidHeaderException("X-Customer-Id", "Invalid value");
         }
 
-//        Event event = new Event(customerTier.get(), customerId, LocalDateTime.now(), ingestReq.toString().length(), ingestReq);
-//        eventPublisher.publishEvent(customerId, enumTier, event);
         inMemoryAccumulatorService.push(ingestReq);
         return ResponseEntity.ok(new IngestResponse("success"));
     }

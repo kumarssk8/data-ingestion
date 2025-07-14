@@ -10,6 +10,8 @@ Two Approach:
 
 This approaches uses an one in-memory data store in each instance. If the in-memory buffer hits the memory threshold or age of first records exceeds the time threshold, content will be uploaded to S3. All the API req in a server will be adding data to one in-memory buffer in a synchronized fashion and the upload to s3 is triggered in async manner. All the memory threshold and age threshold limits can be configured via properties. 
 
+<img width="1370" height="394" alt="Screenshot 2025-07-14 at 3 15 31 PM" src="https://github.com/user-attachments/assets/ec780643-0a29-4c0a-98ec-a613956229f2" />
+
 
 ### Aws Infra Setup:
 I have setup this whole infra in us-east-1a region. VPC names is "saravanakumar-vpc". I have created two public and private subnet. Added route table to the subnet and added IG to public subnet. I have deployed the app as container in the ec2 instance. ALB is not created as it is demo app. App can be access directly with ec2 public dns name.
@@ -28,6 +30,8 @@ Consumer Parameters to tune are:
 3) Time to wait between each consumer poll from the broker.
 
 Here, we have additional cost factor of kafka resource.
+
+<img width="1042" height="312" alt="Screenshot 2025-07-14 at 5 32 54 PM" src="https://github.com/user-attachments/assets/9550813d-4436-4060-8b5a-174aacc51ddd" />
 
 
 

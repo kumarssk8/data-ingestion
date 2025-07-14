@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +30,7 @@ public class IngestionController {
 
     public IngestionController(
                                @Qualifier("tiers") String[] tiers,
-                               @Qualifier("app.req.payload.size.mb") int payloadSize,
+                               @Value("${app.req.payload.size.mb}") Integer payloadSize,
                                InMemoryAccumulatorService inMemoryAccumulatorService){
         this.tiers = tiers;
         this.payloadSize = payloadSize * 1024 * 1024;

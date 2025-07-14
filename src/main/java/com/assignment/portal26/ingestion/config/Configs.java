@@ -20,14 +20,8 @@ import java.util.concurrent.Executors;
 @Slf4j
 public class Configs {
 
-    String[] tiers;
-
-    public Configs(@Value("${app.tiers}") String[] tiers){
-        this.tiers = tiers;
-    }
-
     @Bean("tiers")
-    public String[] tiers(){
+    public String[] tiers(@Value("${app.tiers}") String[] tiers){
         return tiers;
     }
 

@@ -59,30 +59,4 @@ public class IngestionController {
         return ResponseEntity.ok(new IngestResponse("success"));
     }
 
-
-//    @Autowired
-//    S3Service s3Service;
-//
-//    @PostMapping("/test")
-//    public String test(){
-//        String s1 = """
-//				{
-//				  "event_timestamp":"2024-01-11T01:42:50.234200+00:00",
-//				  "body":"what is the capital of India?"
-//				}
-//				""";
-//
-//
-//        String s2 = """
-//				{
-//				  "event_timestamp":"2024-01-11T01:42:50.234200+00:00",
-//				  "body":"what is the capital of India?"
-//				}
-//				""";
-//        String path =  "test";
-//        byte[] b = new byte[10000];
-//        s3Service.upload(path, s1);
-//        return "success";
-//    }
-
 }

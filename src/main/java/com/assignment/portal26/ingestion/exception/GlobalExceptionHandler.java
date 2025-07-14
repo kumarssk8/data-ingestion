@@ -3,6 +3,8 @@ package com.assignment.portal26.ingestion.exception;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -19,6 +21,25 @@ public class GlobalExceptionHandler {
                         "invalid_header",
                         invalidHeaderException.header));
     }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ApiErrorResponse> handleMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+                .body(new ApiErrorResponse(ex.getMessage(),
+                        HttpStatus.METHOD_NOT_ALLOWED.value(),
+                        "method_not_supported",
+                        null));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidBody(HttpMessageNotReadableException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiErrorResponse(ex.getMessage(),
+                        HttpStatus.BAD_REQUEST.value(),
+                        "invalid_request",
+                        null));
+    }
+
 
 
     @ExceptionHandler(Exception.class)

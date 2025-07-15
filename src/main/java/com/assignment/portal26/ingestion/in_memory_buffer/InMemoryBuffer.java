@@ -41,7 +41,7 @@ public class InMemoryBuffer {
                 sb.append(",");
             }
             sb.append(s);
-            size += (s.length() * 8);
+            size += (s.length() * 2); // utf-16 uses 2 bytes for each character in memory
             if (size > maxSize) {
                 log.info("Performing memory flush");
                 uploadAndReset();

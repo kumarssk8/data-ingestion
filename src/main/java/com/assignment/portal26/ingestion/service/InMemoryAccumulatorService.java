@@ -26,7 +26,7 @@ public class InMemoryAccumulatorService {
         this.inMemoryBuffer = inMemoryBuffer;
         this.objectMapper = objectMapper;
         ScheduledExecutorService scheduler = newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(inMemoryBuffer::timeFlush, 0, timeflushInSecs, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(inMemoryBuffer::timeFlush, timeflushInSecs, timeflushInSecs, TimeUnit.SECONDS);
     }
 
     public void push(IngestData ingestData) throws JsonProcessingException {
